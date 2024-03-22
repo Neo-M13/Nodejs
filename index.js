@@ -24,27 +24,36 @@ yargs.command({
             type:'number'
         },
     },
-    handler: function(argv){
-        console.log(" Adding a student " +  argv.name + " Age: " + argv.age + " Class: " + argv.class)
+    handler(argv){
+        console.log("Adding Student...")
         studentUtils.addStudents(argv.name,argv.age,argv.class)
+       
     }
 })
 
 // removing a student
 yargs.command({
     command:"remove",
-    description:"removing a student",
-    handler: function(){
-        console.log("Removing a student")
+    description:" Removing a student",
+    builder:{
+        name:{
+            describe:"takes in students fullname",
+            demandOption:true,
+            type:'string'
+        }
+    },
+    handler(argv){
+        studentUtils.removeStudent(argv.name)
     }
 })
 
-// listingg all students
+// listing all students
 yargs.command({
     command:"list",
     description:"listing a student",
-    handler: function(){
+    handler(){
         console.log("Listing a student")
+        studentUtils.listStudents()
     }
 })
 
@@ -52,12 +61,20 @@ yargs.command({
 yargs.command({
     command:"read",
     description:"reading a student",
-    handler: function(){
+    builder:{
+        name:{
+            describe:"takes in students fullname",
+            demandOption:true,
+            type:'string'
+        }
+    },
+    handler(argv){
         console.log("Reading a student")
+        studentUtils.readStudent(argv.name)
     }
 })
 
-console.log(yargs.argv)
+yargs.argv
 
 // const command = process.argv[2];
 
